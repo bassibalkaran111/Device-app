@@ -1,7 +1,10 @@
 ﻿using System.ComponentModel.Design;
+using System.Data;
 using System.Net.Security;
 using System.Reflection.Metadata;
+using System.Text.RegularExpressions;
 using System.Transactions;
+using System.Xml.Linq;
 using System.Xml.XPath;
 
 class Program
@@ -30,8 +33,8 @@ class Program
             // call OneDeivce method
             OneDevice();
 
-            Console.WriteLine("\n\nDo you want to add another device? (y/n)");
-            Nextdevice = Console.ReadLine()[0];
+            
+            Nextdevice = CheckProceed();
 
             Console.Clear();
 
@@ -40,7 +43,7 @@ class Program
 
     }
 
-    // gather device data from the user and produce a device summary 
+  
     static void OneDevice()
     {
         //local variables 
@@ -53,17 +56,13 @@ class Program
         decimal deprecationValue;
         string deviceSummary = "";
 
-        List<string> DEVICE = new List<string>() { "ASUS", "XP", "S23", "EX2" };
-        DEVICE.AsReadOnly();
-
         Console.WriteLine("---------- Log Device ----------]\n");
 
         //user input the device name
         Console.WriteLine("Please input device name:");
         deviceName = Console.ReadLine();
-        
-
-        //user inputs device quantity amount
+       
+            //user inputs device quantity amount
         Console.WriteLine("Please input a quantity");
         quantityOfDevice = Convert.ToDecimal(Console.ReadLine());
 
@@ -81,6 +80,7 @@ class Program
             // first five will be insured at full cost
             insuranceAmount = 5 * devicePrice;
             insuranceAmount += (quantityOfDevice - 5) * 0.9m * devicePrice; 
+
             //remaining devices will be insured at 10% less of cost
 
 
@@ -104,14 +104,34 @@ class Program
         //create device summary
         deviceSummary += $"{deviceName}\nTotal cost for {quantityOfDevice}  {deviceName} devices is = to {devicePrice:C}\nMonth\t\t\tvalue Loss\n{deprecationSummary} {deviceCatergory}: {devicePrice:C}";
         Console.WriteLine(deviceSummary);
-        
-
-
 
         
+
+
+
+
+    }
+
+    static char CheckProceed()
+    {
+        while (true)
+        {
+            string proceed;
+            Console.WriteLine("\n\nDo you want to add another device? (y/n)");
+            proceed = Console.ReadLine();
+
+            if (Regex.IsMatch(proceed, @"^[YNyn]+$") && !string.IsNullOrEmpty(proceed) && proceed.Length == 1)
+            {
+                return char.Parse(proceed[0].ToString().ToLower());
+            }
+            else
+            {
+                Console.WriteLine("Error: please use Y or N");
+            }
+
+        }
+
     }
 }
 
 
-
-            
