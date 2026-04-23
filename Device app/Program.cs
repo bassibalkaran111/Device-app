@@ -11,13 +11,13 @@ using System.Xml.XPath;
 class Program
 {
     //global variables
-    static string mostExpensiveDevice = "";
-    static List<string> DeviceCategories = new List<string> { "Laptop", "Desktop", "Other"};
-
+    static List<string> DEVICECATEGORIES = new List<string> { "Laptop", "Desktop", "Other"};
+    
     static void Main(string[] args)
     {
         //local variables 
         char Nextdevice = 'y';
+        DEVICECATEGORIES.AsReadOnly();
 
         // Display app titile
         Console.WriteLine("██████╗ ███████╗██╗   ██╗██╗ ██████╗███████╗     █████╗ ██████╗ ██████╗ \r\n██╔══██╗██╔════╝██║   ██║██║██╔════╝██╔════╝    ██╔══██╗██╔══██╗██╔══██╗\r\n██║  ██║█████╗  ██║   ██║██║██║     █████╗      ███████║██████╔╝██████╔╝\r\n██║  ██║██╔══╝  ╚██╗ ██╔╝██║██║     ██╔══╝      ██╔══██║██╔═══╝ ██╔═══╝ \r\n██████╔╝███████╗ ╚████╔╝ ██║╚██████╗███████╗    ██║  ██║██║     ██║     \r\n╚═════╝ ╚══════╝  ╚═══╝  ╚═╝ ╚═════╝╚══════╝    ╚═╝  ╚═╝╚═╝     ╚═╝     ");
@@ -35,17 +35,12 @@ class Program
             // call OneDeivce method
             OneDevice();
 
-
             Nextdevice = CheckProceed();
 
             Console.Clear();
-
         }
 
-
     }
-
-
     static void OneDevice()
     {
         //local variables 
@@ -82,15 +77,11 @@ class Program
             insuranceAmount += (quantityOfDevice - 5) * 0.9m * devicePrice;
 
             //remaining devices will be insured at 10% less of cost
-
-
         }
         else
         {
             insuranceAmount = devicePrice * quantityOfDevice;
-
         }
-
 
         //calculate 5% Deprecation Over 6 Months
         deprecationValue = devicePrice;
@@ -98,17 +89,10 @@ class Program
         {
             deprecationValue = deprecationValue * 0.95m;
             deprecationSummary += $"Month {monthCount}:\t\t{deprecationValue:C}\n";
-
-
         }
         //create device summary
         deviceSummary += $"{deviceName}\nTotal cost for {quantityOfDevice}  {deviceName} devices is = to {devicePrice:C}\nMonth\t\t\tvalue Loss\n{deprecationSummary} {deviceCatergory}: {devicePrice:C}";
         Console.WriteLine(deviceSummary);
-
-
-
-
-
 
     }
 
@@ -139,7 +123,7 @@ class Program
             string Devicecatergory;
             Console.WriteLine("Please input device catergory");
             Devicecatergory = Console.ReadLine();
-            if (DeviceCategories.Contains(Devicecatergory) && !string.IsNullOrEmpty(Devicecatergory))
+            if (DEVICECATEGORIES.Contains(Devicecatergory) && !string.IsNullOrEmpty(Devicecatergory))
             {
                 return Devicecatergory;
             }
@@ -147,10 +131,7 @@ class Program
             {
                 Console.WriteLine("Error please use valid device type");
             }
-
         }
-
-
 
     }
 }
