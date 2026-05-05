@@ -12,7 +12,11 @@ class Program
 {
     //global variables
     static List<string> DEVICECATEGORIES = new List<string> { "Laptop", "Desktop", "Other"};
-    
+    static int laptopCounter = 0;
+    static int desktopCounter = 0;
+    static int otherCounter = 0;
+    static string mostExpensiveDevice = "";
+    static decimal mostExpensiveCost = -1;
     static void Main(string[] args)
     {
         //local variables 
@@ -39,12 +43,22 @@ class Program
 
             Console.Clear();
         }
+        //display total device summary
+        string totalDeviceSummary = "$$$$$$$$$ Final Devices Summary $$$$$$$$$\n";
+        totalDeviceSummary += $"Total Number Of Laptops: {laptopCounter}\n";
+        totalDeviceSummary += $"Total Number Of Desktops: {desktopCounter}\n";
+        totalDeviceSummary += $"Total Number Of Others: {otherCounter}\n";
+        totalDeviceSummary += $"Most Expensive Device Name: {mostExpensiveDevice}\n";
+        totalDeviceSummary += $"Most Expensive Device Cost: {mostExpensiveCost}\n";
+        Console.WriteLine(totalDeviceSummary);
 
+        
+        
     }
     static void OneDevice()
     {
         //local variables 
-        decimal quantityOfDevice = -1m;
+        int quantityOfDevice = -1;
         decimal devicePrice = -1m;
         decimal insuranceAmount = -1m;
         string deviceCatergory = "";
@@ -61,7 +75,7 @@ class Program
 
         //user inputs device quantity amount
         Console.WriteLine("Please input a quantity");
-        quantityOfDevice = Convert.ToDecimal(Console.ReadLine());
+        quantityOfDevice = Convert.ToInt32(Console.ReadLine());
 
         //device price 
         Console.WriteLine("Please input device price");
@@ -69,8 +83,25 @@ class Program
 
         //device catergory
         deviceCatergory = CheckDevicecatergory();
-        //calculate insurance amount
-        if (quantityOfDevice > 5)
+
+        //increase device counters
+        if (deviceCatergory == "Laptop")
+        {
+         laptopCounter += quantityOfDevice;
+        }
+        else
+        if (deviceCatergory == "Desktop")
+        {
+         desktopCounter += quantityOfDevice;
+        }
+        else
+        if (deviceCatergory == "Other")
+        {
+         otherCounter += quantityOfDevice;
+        }
+
+                //calculate insurance amount
+                if (quantityOfDevice > 5)
         {
             // first five will be insured at full cost
             insuranceAmount = 5 * devicePrice;
@@ -83,6 +114,13 @@ class Program
             insuranceAmount = devicePrice * quantityOfDevice;
         }
 
+        //determine if the device is most expensive device
+        if (insuranceAmount > mostExpensiveCost)
+        {
+            mostExpensiveDevice = $"{deviceName}";
+            mostExpensiveCost = insuranceAmount;
+        }
+
         //calculate 5% Deprecation Over 6 Months
         deprecationValue = devicePrice;
         for (int monthCount = 1; monthCount < 7; monthCount++)
@@ -93,7 +131,7 @@ class Program
         //create device summary
         deviceSummary += $"{deviceName}\nTotal cost for {quantityOfDevice}  {deviceName} devices is = to {devicePrice:C}\nMonth\t\t\tvalue Loss\n{deprecationSummary} {deviceCatergory}: {devicePrice:C}";
         Console.WriteLine(deviceSummary);
-
+        
     }
 
     static char CheckProceed()
@@ -132,6 +170,7 @@ class Program
                 Console.WriteLine("Error please use valid device type");
             }
         }
+       
 
     }
 }
