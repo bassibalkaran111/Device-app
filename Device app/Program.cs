@@ -52,8 +52,6 @@ class Program
         totalDeviceSummary += $"Most Expensive Device Cost: {mostExpensiveCost}\n";
         Console.WriteLine(totalDeviceSummary);
 
-        
-        
     }
     static void OneDevice()
     {
@@ -74,12 +72,10 @@ class Program
         deviceName = Console.ReadLine();
 
         //user inputs device quantity amount
-        Console.WriteLine("Please input a quantity");
-        quantityOfDevice = Convert.ToInt32(Console.ReadLine());
+        quantityOfDevice = CheckQuantityOfDevice();
 
         //device price 
-        Console.WriteLine("Please input device price");
-        devicePrice = Convert.ToDecimal(Console.ReadLine());
+        devicePrice = CheckDevicePrice();
 
         //device catergory
         deviceCatergory = CheckDevicecatergory();
@@ -170,9 +166,46 @@ class Program
                 Console.WriteLine("Error please use valid device type");
             }
         }
-       
+    }
+       static decimal CheckDevicePrice()
+        {
+            while (true)
+            {
+                Console.WriteLine("Please input device price");
+                string input = Console.ReadLine();
+                if (decimal.TryParse(input, out decimal price) && price >= 0)
+                {
+                  return price;
+                }
+                else
+                {
+                 Console.WriteLine("Error: please enter a valid decimal number.");
+                }
+
+
+            }
+
+        }
+    static int CheckQuantityOfDevice()
+    {
+        while (true)
+        {
+            Console.WriteLine("Please input a quantity");
+            string input = Console.ReadLine();
+            if (int.TryParse(input, out int price) && price >= 0)
+            {
+                return price;
+            }
+            else
+            {
+                Console.WriteLine("Error: please enter a valid decimal number.");
+            }
+        }
 
     }
+
+
 }
+
 
 
