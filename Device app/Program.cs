@@ -12,6 +12,8 @@ class Program
 {
     //global variables
     static List<string> DEVICECATEGORIES = new List<string> { "Laptop", "Desktop", "Other"};
+    static List<string> ERRORS = new List<string>() { "Error: please enter a valid decimal number.", "Error Please Use Vaid Catergory", "Error: please use Y or N", };
+    static List<string> VALID = new List<string>() { "Please input a quantity", "Please input device price", "Please input device catergory", "Please Enter Y or N" };
     static int laptopCounter = 0;
     static int desktopCounter = 0;
     static int otherCounter = 0;
@@ -22,6 +24,8 @@ class Program
         //local variables 
         char Nextdevice = 'y';
         DEVICECATEGORIES.AsReadOnly();
+        ERRORS.AsReadOnly();
+        VALID.AsReadOnly();
 
         // Display app titile
         Console.WriteLine("██████╗ ███████╗██╗   ██╗██╗ ██████╗███████╗     █████╗ ██████╗ ██████╗ \r\n██╔══██╗██╔════╝██║   ██║██║██╔════╝██╔════╝    ██╔══██╗██╔══██╗██╔══██╗\r\n██║  ██║█████╗  ██║   ██║██║██║     █████╗      ███████║██████╔╝██████╔╝\r\n██║  ██║██╔══╝  ╚██╗ ██╔╝██║██║     ██╔══╝      ██╔══██║██╔═══╝ ██╔═══╝ \r\n██████╔╝███████╗ ╚████╔╝ ██║╚██████╗███████╗    ██║  ██║██║     ██║     \r\n╚═════╝ ╚══════╝  ╚═══╝  ╚═╝ ╚═════╝╚══════╝    ╚═╝  ╚═╝╚═╝     ╚═╝     ");
@@ -64,7 +68,7 @@ class Program
         string deprecationSummary = "";
         decimal deprecationValue;
         string deviceSummary = "";
-
+        const decimal DISCOUNT = 0.9m;
         Console.WriteLine("---------- Log Device ----------]\n");
 
         //user input the device name
@@ -101,7 +105,7 @@ class Program
         {
             // first five will be insured at full cost
             insuranceAmount = 5 * devicePrice;
-            insuranceAmount += (quantityOfDevice - 5) * 0.9m * devicePrice;
+            insuranceAmount += (quantityOfDevice - 5) * DISCOUNT * devicePrice;
 
             //remaining devices will be insured at 10% less of cost
         }
@@ -135,7 +139,7 @@ class Program
         while (true)
         {
             string proceed;
-            Console.WriteLine("\n\nDo you want to add another device? (y/n)");
+            Console.WriteLine(VALID[3]);
             proceed = Console.ReadLine();
 
             if (Regex.IsMatch(proceed, @"^[YNyn]+$") && !string.IsNullOrEmpty(proceed) && proceed.Length == 1)
@@ -144,7 +148,7 @@ class Program
             }
             else
             {
-                Console.WriteLine("Error: please use Y or N");
+                Console.WriteLine(ERRORS[2]);
             }
 
         }
@@ -155,7 +159,7 @@ class Program
         while (true)
         {
             string Devicecatergory;
-            Console.WriteLine("Please input device catergory");
+            Console.WriteLine(VALID[2]);
             Devicecatergory = Console.ReadLine();
             if (DEVICECATEGORIES.Contains(Devicecatergory) && !string.IsNullOrEmpty(Devicecatergory))
             {
@@ -163,7 +167,7 @@ class Program
             }
             else
             {
-                Console.WriteLine("Error please use valid device type");
+                Console.WriteLine(ERRORS[1]);
             }
         }
     }
@@ -171,7 +175,7 @@ class Program
         {
             while (true)
             {
-                Console.WriteLine("Please input device price");
+            Console.WriteLine(VALID[1]);
                 string input = Console.ReadLine();
                 if (decimal.TryParse(input, out decimal price) && price >= 0)
                 {
@@ -179,7 +183,7 @@ class Program
                 }
                 else
                 {
-                 Console.WriteLine("Error: please enter a valid decimal number.");
+                Console.WriteLine(ERRORS[0]);
                 }
 
 
@@ -190,7 +194,7 @@ class Program
     {
         while (true)
         {
-            Console.WriteLine("Please input a quantity");
+            Console.WriteLine(VALID[0]);
             string input = Console.ReadLine();
             if (int.TryParse(input, out int price) && price >= 0)
             {
@@ -198,7 +202,7 @@ class Program
             }
             else
             {
-                Console.WriteLine("Error: please enter a valid decimal number.");
+                Console.WriteLine(ERRORS[0]);
             }
         }
 
